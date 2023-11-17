@@ -17,7 +17,7 @@ const MainContent = () => {
       <ul>
         {cloudFiles.map((res: any, index) => {
           return (
-            <div>
+            <div key={"cloudfile" + index}>
               {index + 1}. {res.fileName}
             </div>
           );
