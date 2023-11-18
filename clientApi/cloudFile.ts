@@ -16,7 +16,6 @@ export const getAllCloudFiles = () => {
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnMount: false,
     }
   );
   const { trigger, isMutating } = useSWRMutation(
