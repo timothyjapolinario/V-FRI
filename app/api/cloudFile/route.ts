@@ -9,7 +9,16 @@ type ResponseData = {
 
 export async function GET(req: NextRequest) {
   const cloudFiles = await getAllCloudFiles();
-  return NextResponse.json({ cloudFiles: cloudFiles });
+  return NextResponse.json(
+    { cloudFiles: cloudFiles },
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    }
+  );
 }
 export async function POST(req: NextRequest, res: NextResponse) {
   const data = await req.formData();
@@ -26,5 +35,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
   }
 
-  return NextResponse.json({ isSucccess: success });
+  return NextResponse.json(
+    { isSucccess: success },
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    }
+  );
 }
