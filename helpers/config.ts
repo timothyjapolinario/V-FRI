@@ -6,4 +6,4 @@ export const apiDomain =
 export const appDomain =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3001"
-    : "https://v-fri.vercel.app/";
+    : "https://v-fri-git-main-timothyjapolinarios-projects.vercel.app/";
