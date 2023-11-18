@@ -4,10 +4,9 @@ type Prop = {
 };
 const ServiceLink = ({ urlIcon, shortDescription }: Prop) => {
   return (
-    <div className="h-full bg-gray-200 shadow-sm border-2 border-solid border-black flex w-full p-2 items-center gap-2 rounded-md cursor-pointer">
+    <div className="h-full w-full justify-evenly flex flex-wrap bg-gray-200 shadow-sm border-2 border-solid border-black p-2 items-center gap-2 rounded-md cursor-pointer">
       <img src={urlIcon} className="h-[60px]" />
       <p className="font-bold">{shortDescription}</p>
-      <button className="text-blue-500 justify-self-end">{">"}</button>
     </div>
   );
 };
