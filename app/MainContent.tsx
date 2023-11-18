@@ -2,19 +2,10 @@
 
 import { getAllCloudFiles } from "@/clientApi/cloudFile";
 import ServiceTable from "@/components/ServiceTable";
-import { apiDomain } from "@/helpers/config";
-import { useEffect } from "react";
-import useSWR from "swr";
+
 const MainContent = () => {
-  const { cloudFiles } = getAllCloudFiles();
-  useEffect(() => {
-    console.log(cloudFiles);
-  }, [cloudFiles]);
   return (
-    <div className="relative h-screen bg-slate-200">
-      <h1 className="w-full bg-white text-black p-1 text-sm font-bold">
-        V-FRI
-      </h1>
+    <div className="relative h-screen ">
       <div className="max-h-[55vh] h-[55vh] overflow-y-hidden relative bg-blue-500">
         <div className="absolute w-full h-full bottom-[30vh]">
           <img className="w-full h-[90vh]" src="/images/valenzuela.jpg" />
