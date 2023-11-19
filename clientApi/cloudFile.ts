@@ -7,7 +7,15 @@ import useSWRMutation from "swr/mutation";
 export const getAllCloudFiles = () => {
   const [cloudFiles, setCloudFiles] = useState<CloudFile[]>([]);
   const fetcher = async (url: string) => {
-    return fetch(url).then((res) => res.json());
+    return fetch(url).then(async (res) => {
+      const data = await res.json();
+      if (data && data["cloudFiles"]) {
+        const newCloudFiles = data["cloudFiles"].map((cloudFileRaw: any) => {
+          return mapCloudFileFromFirebase(cloudFileRaw);
+        }) as CloudFile[];
+        setCloudFiles(newCloudFiles);
+      }
+    });
   };
 
   const { data, error, isLoading } = useSWR(
@@ -22,23 +30,9 @@ export const getAllCloudFiles = () => {
     `${appDomain}/api/cloudFile`,
     fetcher
   );
-  useEffect(() => {
-    if (data && data["cloudFiles"]) {
-      const newCloudFiles = data["cloudFiles"].map((cloudFileRaw: any) => {
-        return mapCloudFileFromFirebase(cloudFileRaw);
-      }) as CloudFile[];
-      setCloudFiles(newCloudFiles);
-    }
-  }, [data]);
-  const refreshCloudFiles = (callback?: () => void) => {
-    trigger().then(() => {
-      if (callback) {
-        callback();
-      }
-    });
-  };
+
   const isRefreshing = () => isMutating;
-  return { cloudFiles, refreshCloudFiles, isMutating };
+  return { cloudFiles, isMutating, isLoading, trigger };
 };
 
 export const uploadFile = async (file: File) => {
@@ -48,7 +42,7 @@ export const uploadFile = async (file: File) => {
     method: "POST",
     body: formData,
   }).then((res) => {
+    console.log("tapos na");
     return res.json();
   });
-  console.log(response);
 };

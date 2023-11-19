@@ -1,10 +1,11 @@
 "use client";
 import { getAllCloudFiles, uploadFile } from "@/clientApi/cloudFile";
 import { appDomain } from "@/helpers/config";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Files = () => {
-  const { cloudFiles, refreshCloudFiles } = getAllCloudFiles();
+  const { cloudFiles, isLoading, isMutating, trigger } = getAllCloudFiles();
   const [selectedFile, setSelectedFile] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
   return (
@@ -25,7 +26,7 @@ const Files = () => {
           if (selectedFile) {
             setIsUploading(true);
             uploadFile(selectedFile).then(() => {
-              refreshCloudFiles(() => {
+              trigger().then(() => {
                 setIsUploading(false);
               });
             });
@@ -39,6 +40,14 @@ const Files = () => {
         Uploading na sya, chill ka muna
       </p>
       <ul>
+        {(isLoading || isUploading) && (
+          <Image
+            src="/icons/loading-spinner.svg"
+            alt="loading-spinner"
+            width={100}
+            height={100}
+          />
+        )}
         {cloudFiles.map((cf, index) => {
           return (
             <div
