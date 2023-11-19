@@ -2,18 +2,25 @@ import { CloudFile } from "@/custom_types/CloudFile";
 import { apiDomain, appDomain } from "@/helpers/config";
 import { mapCloudFileFromFirebase } from "@/helpers/mappers/cloudFileMapper";
 import { useEffect, useState } from "react";
+import { json } from "stream/consumers";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 export const getAllCloudFiles = () => {
   const [cloudFiles, setCloudFiles] = useState<CloudFile[]>([]);
   const fetcher = async (url: string) => {
     return fetch(url).then(async (res) => {
-      const data = await res.json();
-      if (data && data["cloudFiles"]) {
-        const newCloudFiles = data["cloudFiles"].map((cloudFileRaw: any) => {
-          return mapCloudFileFromFirebase(cloudFileRaw);
-        }) as CloudFile[];
-        setCloudFiles(newCloudFiles);
+      try {
+        const data = await res.json();
+
+        if (data && data["cloudFiles"]) {
+          const newCloudFiles = data["cloudFiles"].map((cloudFileRaw: any) => {
+            return mapCloudFileFromFirebase(cloudFileRaw);
+          }) as CloudFile[];
+          setCloudFiles(newCloudFiles);
+        }
+      } catch (error) {
+        console.log(error);
+        return { error: error };
       }
     });
   };
@@ -45,4 +52,16 @@ export const uploadFile = async (file: File) => {
     console.log("tapos na");
     return res.json();
   });
+};
+
+export const deleteFile = async (fileName: string) => {
+  const response = await fetch(`${appDomain}/api/cloudFile`, {
+    method: "DELETE",
+    body: JSON.stringify({ fileName: fileName }),
+  }).then((res) => {
+    console.log("tapos na delete");
+    return res.json();
+  });
+  console.log(response);
+  return response;
 };

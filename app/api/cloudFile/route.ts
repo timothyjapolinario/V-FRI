@@ -1,5 +1,5 @@
 import { getAllCloudFiles } from "@/services/cloudFileService";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getStorage, ref, uploadBytes } from "firebase/storage";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -45,4 +45,21 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     }
   );
+}
+
+export async function DELETE(req: NextRequest) {
+  const body = await req.json();
+
+  const storage = getStorage();
+
+  const fileRef = ref(storage, body["fileName"]);
+
+  deleteObject(fileRef)
+    .then(() => {
+      console.log("Success delete");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return NextResponse.json({ message: "DELETE: " + body["fileName"] });
 }

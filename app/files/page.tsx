@@ -1,5 +1,9 @@
 "use client";
-import { getAllCloudFiles, uploadFile } from "@/clientApi/cloudFile";
+import {
+  deleteFile,
+  getAllCloudFiles,
+  uploadFile,
+} from "@/clientApi/cloudFile";
 import { appDomain } from "@/helpers/config";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -31,23 +35,26 @@ const Files = () => {
 
   return (
     <div>
-      <h1>Files</h1>
-      <input
-        type="file"
-        onChange={(e) => {
-          const files = e.target.files;
-          if (files) {
-            setSelectedFile(files[0]);
-          }
-        }}
-      />
-      <button
-        className="bg-green-500 p-1 rounded-md"
-        onClick={onClickUpload}
-        disabled={isUploading}
-      >
-        Upload!
-      </button>
+      <h1 className="text-3xl font-bold text-center p-5">Files</h1>
+      <div className="float-right p-4">
+        <input
+          type="file"
+          onChange={(e) => {
+            const files = e.target.files;
+            if (files) {
+              setSelectedFile(files[0]);
+            }
+          }}
+        />
+        <button
+          className="bg-green-500 p-1 rounded-md"
+          onClick={onClickUpload}
+          disabled={isUploading}
+        >
+          Upload!
+        </button>
+      </div>
+
       <p style={{ display: isUploading ? "" : "none" }}>
         Uploading na sya, chill ka muna
       </p>
@@ -67,12 +74,28 @@ const Files = () => {
               className="flex border-black border-solid border-2 w-full justify-between my-1"
             >
               <div className="flex items-center">
-                <img src={`/icons/${cf.contentType}.png`} />
+                <img
+                  className="w-[40px]"
+                  src={`/icons/${cf.contentType}.png`}
+                />
                 <a href={cf.downloadUrl}>
-                  <p className="text-blue-500 underline">
-                    Filename: {cf.fileName}
-                  </p>
+                  <p className="text-blue-500 underline">{cf.fileName}</p>
                 </a>
+              </div>
+              <div className="flex items-center">
+                <button
+                  className="mr-4 px-2 bg-red-600 w-fit rounded-lg text-white"
+                  onClick={() => {
+                    console.log("delete" + cf.fileName);
+                    deleteFile(cf.fileName).then(() => {
+                      trigger().then(() => {
+                        console.log("tapos na delete");
+                      });
+                    });
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           );

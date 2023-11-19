@@ -17,6 +17,7 @@ export const getAllCloudFiles = async () => {
   for (const cfRef of files.items) {
     //console.log("RAW: ", cfRef);
     const downloadUrl = await getDownloadURL(ref(storage, `${cfRef.name}`));
+    const metaData = await getMetadata(ref(storage, `${cfRef.name}`));
     const extension = getExtension(cfRef.name);
 
     const cloudFile: CloudFile = {
