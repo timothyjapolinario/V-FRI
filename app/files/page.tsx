@@ -71,15 +71,15 @@ const Files = () => {
           return (
             <div
               key={"cf" + index}
-              className="flex border-black border-solid border-2 w-full justify-between my-1"
+              className="flex flex-wrap break-all border-black border-solid border-2 w-full justify-between my-1"
             >
-              <div className="flex items-center">
+              <div className="flex items-center w-[80%]">
                 <img
                   className="w-[40px]"
                   src={`/icons/${cf.contentType}.png`}
                 />
                 <a href={cf.downloadUrl}>
-                  <p className="text-blue-500 underline">{cf.fileName}</p>
+                  <p className="text-blue-500 underline ">{cf.fileName}</p>
                 </a>
               </div>
               <div className="flex items-center">
