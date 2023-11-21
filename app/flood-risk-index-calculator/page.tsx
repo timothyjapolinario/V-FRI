@@ -8,9 +8,9 @@ const FloodRiskIndexCalculator = () => {
       <div className="border-2 border-solid border-black m-4 p-4">
         <Calculator />
       </div>
-      <div className="m-4 p-4">
+      {/* <div className="m-4 p-4">
         <RiskIndexInterpretationTable />
-      </div>
+      </div> */}
     </div>
   );
 };
