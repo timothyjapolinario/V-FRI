@@ -55,5 +55,5 @@ export const getAllFloodRiskIndex = () => {
     fetcher
   );
 
-  return { indexList, trigger };
+  return { indexList, trigger, isLoading };
 };

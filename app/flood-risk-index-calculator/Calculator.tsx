@@ -3,20 +3,20 @@ import {
   getAllFloodRiskIndex,
   uploadFloodRiskIndex,
 } from "@/clientApi/floodRiskIndex";
-import { FloodRiskIndex } from "@/custom_types/FloodRiskIndex";
+
 import { useState, useEffect } from "react";
 const Calculator = () => {
   const [xValue, setXValue] = useState(0);
   const [yValue, setYValue] = useState(0);
   const [output, setOutput] = useState(0);
-  const { indexList, trigger } = getAllFloodRiskIndex();
+  const { trigger } = getAllFloodRiskIndex();
   useEffect(() => {
     uploadFloodRiskIndex(output).then(() => {
       trigger();
     });
   }, [output]);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full h-full">
       <span className="font-bold">Input x: </span>{" "}
       <input
         type="number"
@@ -47,14 +47,6 @@ const Calculator = () => {
         <span className="font-bold">Your Rectangle Area is!: </span>
         <p>Value: {output}</p>
       </div>
-      <h1 className="p-4 font-bold text-xl">Index List</h1>
-      {indexList.map((index, ind) => {
-        return (
-          <div key={"floodriskindex" + ind}>
-            {index.value} : {index.interpretation}
-          </div>
-        );
-      })}
     </div>
   );
 };
