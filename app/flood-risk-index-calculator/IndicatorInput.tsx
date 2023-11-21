@@ -15,7 +15,7 @@ const IndicatorInput = ({ indicatorType, indicatorValueOptions }: Prop) => {
       <div className="py-2">
         {indicatorList.map((indicator, index) => {
           return (
-            <div>
+            <div key={"indicator" + indicatorType + index}>
               <select
                 onChange={(e) => {
                   const updatedList = indicatorList.map(
@@ -31,7 +31,14 @@ const IndicatorInput = ({ indicatorType, indicatorValueOptions }: Prop) => {
                 }}
               >
                 {indicatorValueOptions.map((indicatorOption, index) => {
-                  return <option value={index}>{indicatorOption}</option>;
+                  return (
+                    <option
+                      value={index}
+                      key={indicatorType + "option" + index}
+                    >
+                      {indicatorOption}
+                    </option>
+                  );
                 })}
               </select>{" "}
               :{" "}
