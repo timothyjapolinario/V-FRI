@@ -21,20 +21,9 @@ export const getAllFloodRiskIndex = () => {
   const [indexList, setIndexList] = useState<FloodRiskIndex[]>([]);
 
   const fetcher = async (url: string) => {
-    return fetch(url).then(async (res) => {
+    return fetch(url).then((res) => {
       try {
-        const data = await res.json();
-        console.log("grrr", data);
-        if (data && data["data"]) {
-          const newIndexList = data["data"].map((index: any) => {
-            const floodRiskIndex: FloodRiskIndex = {
-              value: index["value"],
-              interpretation: index["interpretation"],
-            };
-            return floodRiskIndex;
-          }) as FloodRiskIndex[];
-          setIndexList(newIndexList);
-        }
+        return res.json();
       } catch (error) {
         console.log(error);
         return { error: error };
@@ -50,6 +39,20 @@ export const getAllFloodRiskIndex = () => {
       revalidateOnFocus: false,
     }
   );
+  useEffect(() => {
+    console.log("grrr", data);
+    if (data && data["data"]) {
+      console.log("Wtf");
+      const newIndexList = data["data"].map((index: any) => {
+        const floodRiskIndex: FloodRiskIndex = {
+          value: index["value"],
+          interpretation: index["interpretation"],
+        };
+        return floodRiskIndex;
+      }) as FloodRiskIndex[];
+      setIndexList(newIndexList);
+    }
+  }, [data]);
   const { trigger, isMutating } = useSWRMutation(
     `${appDomain}/api/flood-risk-index`,
     fetcher

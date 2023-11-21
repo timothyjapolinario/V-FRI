@@ -1,9 +1,12 @@
 "use client";
 import { getAllFloodRiskIndex } from "@/clientApi/floodRiskIndex";
 import Image from "next/image";
-
+import { useEffect } from "react";
 export const RiskIndexInterpretationTable = () => {
   const { indexList, isLoading } = getAllFloodRiskIndex();
+  useEffect(() => {
+    console.log(indexList, "hoy nao na");
+  }, [indexList]);
   return (
     <div>
       <h1 className="p-4 font-bold text-xl">Index List</h1>
