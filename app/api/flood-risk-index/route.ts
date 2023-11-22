@@ -4,33 +4,40 @@ import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { doc, getDoc } from "firebase/firestore";
 import firebaseApp from "@/firebase/firebaseApp";
+import { calculateExposure, calculateHazard } from "./floodRiskCalculator";
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  let val = body["floodRiskIndexValue"];
-  if (!body["floodRiskIndexValue"]) {
-    return NextResponse.json({
-      error: true,
-      message: "No flood risk index value",
-    });
-  }
-  if (typeof body["floodRiskIndexValue"] === "string") {
-    val = parseInt(body["floodRiskIndexValue"]);
-  }
-  const interpretation = getInterpretation(val);
-  try {
-    const db = getFirestore(firebaseApp);
-    const docRef = await addDoc(collection(db, "floodRiskIndeces"), {
-      value: val,
-      interpretation: interpretation,
-    });
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
+  console.log(body);
+  const hazardValues = body["HAZARD"];
+  const computedHazard = calculateHazard(hazardValues);
+
+  const exposureValues = body["EXPOSURE"];
+  const computedExposure = calculateExposure(exposureValues);
+
+  // if (!body["floodRiskIndexValue"]) {
+  //   return NextResponse.json({
+  //     error: true,
+  //     message: "No flood risk index value",
+  //   });
+  // }
+  // if (typeof body["floodRiskIndexValue"] === "string") {
+  //   val = parseInt(body["floodRiskIndexValue"]);
+  // }
+  // const interpretation = getInterpretation(val);
+  // try {
+  //   const db = getFirestore(firebaseApp);
+  //   const docRef = await addDoc(collection(db, "floodRiskIndeces"), {
+  //     value: val,
+  //     interpretation: interpretation,
+  //   });
+  //   console.log("Document written with ID: ", docRef.id);
+  // } catch (e) {
+  //   console.error("Error adding document: ", e);
+  // }
 
   return NextResponse.json({
-    floodRiskIndexValue: val,
-    interpretation: interpretation,
+    hazard: computedHazard,
+    exposure: computedExposure,
   });
 }
 

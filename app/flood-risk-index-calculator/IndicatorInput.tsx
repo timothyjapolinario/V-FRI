@@ -1,12 +1,25 @@
 import { Indicator, IndicatorValue } from "@/custom_types/Indicator";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 type Prop = {
   indicatorType: "HAZARD" | "EXPOSURE" | "VULNERABILITY" | "CAPACITY";
   indicatorValueOptions: string[];
+  onAddIndicator?: (indicatorList: Indicator[]) => void;
 };
-const IndicatorInput = ({ indicatorType, indicatorValueOptions }: Prop) => {
+const IndicatorInput = ({
+  indicatorType,
+  indicatorValueOptions,
+  onAddIndicator,
+}: Prop) => {
   const [indicatorList, setIndicatorList] = useState<Indicator[]>([]);
+  const [_indicatorValueOptions, _setindicatorValueOptions] = useState([
+    ...indicatorValueOptions,
+  ]);
 
+  useEffect(() => {
+    if (onAddIndicator) {
+      onAddIndicator(indicatorList);
+    }
+  }, [indicatorList]);
   return (
     <div className="w-full">
       <h1 className="text-center font-bold border-b-2 border-solid border-black">
@@ -27,10 +40,11 @@ const IndicatorInput = ({ indicatorType, indicatorValueOptions }: Prop) => {
                       return indicator;
                     }
                   );
+
                   setIndicatorList([...updatedList]);
                 }}
               >
-                {indicatorValueOptions.map((indicatorOption, index) => {
+                {_indicatorValueOptions.map((indicatorOption, index) => {
                   return (
                     <option
                       value={index}
@@ -44,13 +58,14 @@ const IndicatorInput = ({ indicatorType, indicatorValueOptions }: Prop) => {
               :{" "}
               <input
                 type="number"
+                step={"0.01"}
                 className="w-[100px]"
                 value={indicator.indicatorValue.value}
                 onChange={(e) => {
                   const updatedList = indicatorList.map(
                     (indicator, selIndex) => {
                       if (selIndex === index) {
-                        indicator.indicatorValue.value = parseInt(
+                        indicator.indicatorValue.value = parseFloat(
                           e.target.value
                         );
                       }
