@@ -75,6 +75,16 @@ const IndicatorInput = ({
                   setIndicatorList([...updatedList]);
                 }}
               />
+              <button
+                className=" px-2 bg-red-500 rounded-lg text-white m-2"
+                onClick={() => {
+                  setIndicatorList([
+                    ...indicatorList.filter((_, curInd) => curInd !== index),
+                  ]);
+                }}
+              >
+                X
+              </button>
             </div>
           );
         })}

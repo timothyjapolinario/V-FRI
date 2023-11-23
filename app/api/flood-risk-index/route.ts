@@ -4,7 +4,12 @@ import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { doc, getDoc } from "firebase/firestore";
 import firebaseApp from "@/firebase/firebaseApp";
-import { calculateExposure, calculateHazard } from "./floodRiskCalculator";
+import {
+  calculateCapacity,
+  calculateExposure,
+  calculateHazard,
+  calculateVulnerability,
+} from "./floodRiskCalculator";
 export async function POST(req: NextRequest) {
   const body = await req.json();
   console.log(body);
@@ -13,6 +18,16 @@ export async function POST(req: NextRequest) {
 
   const exposureValues = body["EXPOSURE"];
   const computedExposure = calculateExposure(exposureValues);
+
+  const vulnerabilityValues = body["VULNERABILITY"];
+  const computedVulnerability = calculateVulnerability(vulnerabilityValues);
+
+  const capacityValues = body["CAPACITY"];
+  const computedCapacity = calculateCapacity(capacityValues);
+
+  const floodRiskIndex =
+    (computedHazard * computedVulnerability * computedExposure) /
+    computedCapacity;
 
   // if (!body["floodRiskIndexValue"]) {
   //   return NextResponse.json({
@@ -38,6 +53,9 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     hazard: computedHazard,
     exposure: computedExposure,
+    vulnerability: computedVulnerability,
+    capacity: computedCapacity,
+    floodRiskIndex: floodRiskIndex,
   });
 }
 

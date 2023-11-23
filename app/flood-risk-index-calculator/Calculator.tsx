@@ -28,6 +28,20 @@ const Calculator = () => {
 
   return (
     <div className="flex flex-col w-full h-full gap-2">
+      <button
+        className="bg-green-500 text-white p-5"
+        onClick={() => {
+          calculateRiskIndexBackend(toCalculateValues).then((res) => {
+            setOutput(res["floodRiskIndex"]);
+          });
+        }}
+      >
+        Calculate
+      </button>
+      <div>
+        <span className="font-bold">Flood Risk Value: </span>
+        <p className="underline">{output}</p>
+      </div>
       <div className="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2">
         <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2">
           <IndicatorInput
@@ -86,18 +100,6 @@ const Calculator = () => {
             }}
           />
         </div>
-      </div>
-      <button
-        className="bg-green-500 text-white p-5"
-        onClick={() => {
-          calculateRiskIndexBackend(toCalculateValues);
-        }}
-      >
-        Calculate
-      </button>
-      <div>
-        <span className="font-bold">Still no calculation</span>
-        <p>0</p>
       </div>
     </div>
   );
