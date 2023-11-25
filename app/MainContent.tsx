@@ -2,7 +2,7 @@
 
 import { getAllCloudFiles } from "@/clientApi/cloudFile";
 import ServiceTable from "@/components/ServiceTable";
-
+import { SessionProvider } from "next-auth/react";
 const MainContent = () => {
   return (
     <div className="relative h-screen ">
@@ -26,9 +26,11 @@ const MainContent = () => {
             V-FRI: A Web-based Flood Risk Index Platform
           </h1>
         </div>
-        <div className="h-[70%] bg-gray-100 shadow-2xl p-5">
+        <div className="min-h-[300px] bg-gray-100 shadow-2xl p-5">
           <h2 className="font-bold text-2xl mb-4">Services</h2>
-          <ServiceTable />
+          <SessionProvider>
+            <ServiceTable />
+          </SessionProvider>
         </div>
       </div>
     </div>

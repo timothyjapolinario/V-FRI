@@ -11,12 +11,8 @@ import { calculateRiskIndexBackend } from "@/clientApi/calculator";
 
 const Calculator = () => {
   const [output, setOutput] = useState(0);
-  const { trigger } = getAllFloodRiskIndex();
-  useEffect(() => {
-    uploadFloodRiskIndex(output).then(() => {
-      trigger();
-    });
-  }, [output]);
+  const [interpretation, setInterpretation] = useState<string>("");
+
   const [toCalculateValues, setToCalculateValues] = useState<{
     [key: string]: number[];
   }>({
@@ -31,19 +27,27 @@ const Calculator = () => {
       <button
         className="bg-green-500 text-white p-5"
         onClick={() => {
-          calculateRiskIndexBackend(toCalculateValues).then((res) => {
+          calculateRiskIndexBackend(toCalculateValues, true).then((res) => {
             setOutput(res["floodRiskIndex"]);
+            setInterpretation(res["interpretation"]);
           });
         }}
       >
         Calculate
       </button>
-      <div>
-        <span className="font-bold">Flood Risk Value: </span>
-        <p className="underline">{output}</p>
+      <div className="flex gap-4">
+        <div>
+          <span className="font-bold">Flood Risk Value: </span>
+          <p className="underline">{output}</p>
+        </div>
+        <div>
+          <span className="font-bold">Interpretation</span>
+          <p>{interpretation}</p>
+        </div>
       </div>
+
       <div className="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2">
-        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2">
+        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2 overflow-y-scroll">
           <IndicatorInput
             indicatorType="HAZARD"
             indicatorValueOptions={[
@@ -57,7 +61,7 @@ const Calculator = () => {
             }}
           />
         </div>
-        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2">
+        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2 overflow-y-scroll">
           <IndicatorInput
             indicatorType="EXPOSURE"
             indicatorValueOptions={["Population Density"]}
@@ -69,7 +73,7 @@ const Calculator = () => {
             }}
           />
         </div>
-        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2">
+        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2 overflow-y-scroll">
           <IndicatorInput
             indicatorType="VULNERABILITY"
             indicatorValueOptions={["Elevation level of barangay"]}
@@ -84,7 +88,7 @@ const Calculator = () => {
             }}
           />
         </div>
-        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2">
+        <div className="border-2 border-black border-solid border-collapse h-[40vh] p-2 overflow-y-scroll">
           <IndicatorInput
             indicatorType="CAPACITY"
             indicatorValueOptions={[

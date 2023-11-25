@@ -1,7 +1,19 @@
+"use client";
 import Link from "next/link";
 import ServiceLink from "./ServiceLink";
+import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { appDomain } from "@/helpers/config";
+import { validateAdmin } from "@/clientApi/user";
 
 const ServiceTable = () => {
+  const { data: session } = useSession();
+  const [isAdmin, setIsAdmin] = useState<boolean>();
+  useEffect(() => {
+    validateAdmin().then((res: any) => {
+      setIsAdmin(res["isAdmin"]);
+    });
+  }, [session]);
   return (
     <div className="flex flex-wrap gap-4 w-full sm:grid sm:grid-cols-2 lg:grid-cols-3">
       <Link href={"/files"}>
@@ -14,10 +26,25 @@ const ServiceTable = () => {
       </Link>
 
       <div className="w-[100%] max-w-[300px]">
-        <Link href={"/flood-risk-index-calculator"}>
+        <Link href={"/flood-risk-index"}>
           <div className="w-[100%] max-w-[300px] h-[150px]">
             <ServiceLink
               urlIcon="/icons/flood-icon.png"
+              shortDescription="See Flood Risk Index values here."
+            />
+          </div>
+        </Link>
+      </div>
+      <div
+        className="w-[100%] max-w-[300px]"
+        style={{
+          display: isAdmin ? "" : "none",
+        }}
+      >
+        <Link href={"/flood-risk-index-calculator"}>
+          <div className="w-[100%] max-w-[300px] h-[150px]">
+            <ServiceLink
+              urlIcon="/icons/calculator-icon.png"
               shortDescription="Calculate flood risk index here."
             />
           </div>

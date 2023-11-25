@@ -1,13 +1,13 @@
 export function getInterpretation(value: number) {
-  if (value <= 100) {
-    return "Your rectangle is small";
+  if (value <= 0.2) {
+    return "Low risk";
   }
-  if (value <= 500) {
-    return "Your rectangle is medium";
+  if (value <= 0.5) {
+    return "Medium risk";
   }
-  if (value <= 1000) {
-    return "Your rectangle is large";
+  if (value <= 0.8) {
+    return "High Risk";
   } else {
-    return "Your rectangle is super large!";
+    return "Flood prone";
   }
 }

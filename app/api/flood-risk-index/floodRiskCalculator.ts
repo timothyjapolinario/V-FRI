@@ -41,9 +41,7 @@ export const calculateVulnerability = (exposureValues: number[]) => {
   const returnVal = exposureValues.reduce((total, num) => {
     let toAdd = 0;
     if (num === 1) {
-      toAdd = 0.4;
-    } else if (num === 0) {
-      toAdd = 0.05;
+      toAdd = 0.95;
     } else {
       toAdd =
         (Math.log(num) - Math.log(minX)) / (Math.log(maxX) - Math.log(minX));
@@ -68,5 +66,6 @@ export const calculateCapacity = (capacityValues: number[]) => {
     }
     return total + toAdd;
   }, 0);
+
   return returnVal / capacityValues.length;
 };

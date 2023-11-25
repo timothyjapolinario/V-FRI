@@ -10,9 +10,18 @@ import {
   calculateHazard,
   calculateVulnerability,
 } from "./floodRiskCalculator";
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  console.log(body);
+import { getServerSession } from "next-auth/next";
+import { authOption } from "@/app/authOption";
+
+export async function POST(req: any) {
+  const session = await getServerSession(authOption);
+
+  if (session?.user?.email !== "vcsms.vfri2023@gmail.com") {
+    return NextResponse.json({ error: "true", message: "forbid" });
+  }
+  const raw = await req.json();
+  const body = raw["toCalculate"];
+  console.log("tongina", body);
   const hazardValues = body["HAZARD"];
   const computedHazard = calculateHazard(hazardValues);
 
@@ -28,35 +37,30 @@ export async function POST(req: NextRequest) {
   const floodRiskIndex =
     (computedHazard * computedVulnerability * computedExposure) /
     computedCapacity;
+  const interpretation = getInterpretation(floodRiskIndex);
 
-  // if (!body["floodRiskIndexValue"]) {
-  //   return NextResponse.json({
-  //     error: true,
-  //     message: "No flood risk index value",
-  //   });
-  // }
-  // if (typeof body["floodRiskIndexValue"] === "string") {
-  //   val = parseInt(body["floodRiskIndexValue"]);
-  // }
-  // const interpretation = getInterpretation(val);
-  // try {
-  //   const db = getFirestore(firebaseApp);
-  //   const docRef = await addDoc(collection(db, "floodRiskIndeces"), {
-  //     value: val,
-  //     interpretation: interpretation,
-  //   });
-  //   console.log("Document written with ID: ", docRef.id);
-  // } catch (e) {
-  //   console.error("Error adding document: ", e);
-  // }
+  if (raw["shouldSave"]) {
+    console.log("should save na");
+    try {
+      const db = getFirestore(firebaseApp);
+      const docRef = await addDoc(collection(db, "floodRiskIndeces"), {
+        value: floodRiskIndex,
+        interpretation: interpretation,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
 
-  return NextResponse.json({
-    hazard: computedHazard,
-    exposure: computedExposure,
-    vulnerability: computedVulnerability,
-    capacity: computedCapacity,
-    floodRiskIndex: floodRiskIndex,
-  });
+    return NextResponse.json({
+      hazard: computedHazard,
+      exposure: computedExposure,
+      vulnerability: computedVulnerability,
+      capacity: computedCapacity,
+      floodRiskIndex: floodRiskIndex,
+      interpretation: interpretation,
+    });
+  }
 }
 
 export async function GET(req: NextRequest) {

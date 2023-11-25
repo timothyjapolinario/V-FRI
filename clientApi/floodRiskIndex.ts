@@ -11,7 +11,12 @@ export const uploadFloodRiskIndex = async (floodRiskIndexValue: number) => {
     method: "POST",
     body: JSON.stringify(body),
   }).then((res) => {
-    return res.json();
+    try {
+      res.json();
+    } catch (error) {
+      console.log(error);
+    }
+    return res;
   });
   console.log("RESPONSE!!: ", response);
   return response;

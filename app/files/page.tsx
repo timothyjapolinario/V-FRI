@@ -5,6 +5,7 @@ import {
   uploadFile,
 } from "@/clientApi/cloudFile";
 import { appDomain } from "@/helpers/config";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
