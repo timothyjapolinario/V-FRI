@@ -27,7 +27,7 @@ const Calculator = () => {
       <button
         className="bg-green-500 text-white p-5"
         onClick={() => {
-          calculateRiskIndexBackend(toCalculateValues, true).then((res) => {
+          calculateRiskIndexBackend(toCalculateValues, false).then((res) => {
             setOutput(res["floodRiskIndex"]);
             setInterpretation(res["interpretation"]);
           });
@@ -35,15 +35,29 @@ const Calculator = () => {
       >
         Calculate
       </button>
-      <div className="flex gap-4">
-        <div>
-          <span className="font-bold">Flood Risk Value: </span>
-          <p className="underline">{output}</p>
+      <div className="flex justify-between">
+        <div className="flex gap-4">
+          <div>
+            <span className="font-bold">Flood Risk Value: </span>
+            <p className="underline">{output}</p>
+          </div>
+          <div>
+            <span className="font-bold">Interpretation</span>
+            <p>{interpretation}</p>
+          </div>
         </div>
-        <div>
-          <span className="font-bold">Interpretation</span>
-          <p>{interpretation}</p>
-        </div>
+
+        <button
+          className="bg-green-500 px-2 rounded-lg text-white"
+          onClick={() => {
+            calculateRiskIndexBackend(toCalculateValues, true).then((res) => {
+              setOutput(res["floodRiskIndex"]);
+              setInterpretation(res["interpretation"]);
+            });
+          }}
+        >
+          Save
+        </button>
       </div>
 
       <div className="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2">

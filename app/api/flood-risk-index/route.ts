@@ -15,10 +15,11 @@ import { authOption } from "@/app/authOption";
 
 export async function POST(req: any) {
   const session = await getServerSession(authOption);
-
+  console.log(session?.user?.email);
   if (session?.user?.email !== "vcsms.vfri2023@gmail.com") {
     return NextResponse.json({ error: "true", message: "forbid" });
   }
+
   const raw = await req.json();
   const body = raw["toCalculate"];
   console.log("tongina", body);
@@ -51,19 +52,29 @@ export async function POST(req: any) {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-
-    return NextResponse.json({
-      hazard: computedHazard,
-      exposure: computedExposure,
-      vulnerability: computedVulnerability,
-      capacity: computedCapacity,
-      floodRiskIndex: floodRiskIndex,
-      interpretation: interpretation,
-    });
   }
+  return NextResponse.json({
+    hazard: computedHazard,
+    exposure: computedExposure,
+    vulnerability: computedVulnerability,
+    capacity: computedCapacity,
+    floodRiskIndex: floodRiskIndex,
+    interpretation: interpretation,
+  });
 }
 
 export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOption);
+
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: "true", message: "forbid" });
+  }
+  const isAdmin = await validateIfAdmin(session.user.email);
+  console.log("IS ADMIN", isAdmin);
+  if (!isAdmin) {
+    return NextResponse.json({ error: "true", message: "forbid" });
+  }
+
   const db = getFirestore(firebaseApp);
   const collectionRef = collection(db, "floodRiskIndeces");
   const docSnap = await getDocs(collectionRef);
@@ -74,3 +85,16 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ data: floodRiskIndeces });
 }
+
+export const validateIfAdmin = async (
+  emailAddress: string
+): Promise<boolean> => {
+  const db = getFirestore(firebaseApp);
+  const collectionRef = collection(db, "admins");
+  const docSnap = await getDocs(collectionRef);
+  const admins: any[] = [];
+  docSnap.forEach((doc) => {
+    admins.push(doc.data());
+  });
+  return admins.includes(emailAddress);
+};
