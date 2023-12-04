@@ -4,13 +4,13 @@ import ServiceLink from "./ServiceLink";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { appDomain } from "@/helpers/config";
-import { validateAdmin } from "@/clientApi/user";
+import { validateAdminClient } from "@/clientApi/user";
 
 const ServiceTable = () => {
   const { data: session } = useSession();
   const [isAdmin, setIsAdmin] = useState<boolean>();
   useEffect(() => {
-    validateAdmin().then((res: any) => {
+    validateAdminClient().then((res: any) => {
       setIsAdmin(res["isAdmin"]);
     });
   }, [session]);
