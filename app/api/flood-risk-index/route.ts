@@ -94,7 +94,8 @@ export const validateIfAdmin = async (
   const docSnap = await getDocs(collectionRef);
   const admins: any[] = [];
   docSnap.forEach((doc) => {
-    admins.push(doc.data());
+    admins.push(doc.data()["emailAddress"]);
   });
+  console.log(admins);
   return admins.includes(emailAddress);
 };

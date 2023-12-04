@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
   if (!session?.user?.email) {
     return NextResponse.json({ error: "true", message: "forbid" });
   }
+  console.log("EMAIL", session.user.email);
   const isAdmin = await validateIfAdmin(session.user.email);
   console.log("IS ADMIN", isAdmin);
   if (!isAdmin) {
@@ -40,6 +41,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   if (!session?.user?.email) {
     return NextResponse.json({ error: "true", message: "forbid" });
   }
+
   const isAdmin = await validateIfAdmin(session.user.email);
   console.log("IS ADMIN", isAdmin);
   if (!isAdmin) {
