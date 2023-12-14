@@ -16,14 +16,21 @@ const ServiceTable = () => {
   }, [session]);
   return (
     <div className="flex flex-wrap gap-4 w-full sm:grid sm:grid-cols-2 lg:grid-cols-3">
-      <Link href={"/files"}>
-        <div className="w-[100%] max-w-[300px] h-[150px]">
-          <ServiceLink
-            urlIcon="/icons/document-icon.png"
-            shortDescription="Manage your files here."
-          />
-        </div>
-      </Link>
+      <div
+        className="w-[100%] max-w-[300px]"
+        style={{
+          display: isAdmin ? "" : "none",
+        }}
+      >
+        <Link href={"/files"}>
+          <div className="w-[100%] max-w-[300px] h-[150px]">
+            <ServiceLink
+              urlIcon="/icons/document-icon.png"
+              shortDescription="Manage your files here."
+            />
+          </div>
+        </Link>
+      </div>
 
       <div className="w-[100%] max-w-[300px]">
         <Link href={"/flood-risk-index"}>

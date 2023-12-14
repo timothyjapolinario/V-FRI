@@ -4,6 +4,7 @@ export const calculateRiskIndexBackend = async (
   toCalculate: {
     [key: string]: number[];
   },
+  barangay: string,
   shouldSave?: boolean
 ) => {
   const result = fetch(`${appDomain}/api/flood-risk-index`, {
@@ -11,7 +12,7 @@ export const calculateRiskIndexBackend = async (
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ toCalculate, shouldSave }),
+    body: JSON.stringify({ toCalculate, shouldSave, barangay }),
   }).then((res) => {
     let returnVal = undefined;
     try {

@@ -12,7 +12,7 @@ import { calculateRiskIndexBackend } from "@/clientApi/calculator";
 const Calculator = () => {
   const [output, setOutput] = useState(0);
   const [interpretation, setInterpretation] = useState<string>("");
-
+  const [barangay, setBarangay] = useState<string>("Arkong Bato");
   const [toCalculateValues, setToCalculateValues] = useState<{
     [key: string]: number[];
   }>({
@@ -22,20 +22,57 @@ const Calculator = () => {
     CAPACITY: [],
   });
 
+  const barangayList = [
+    "Arkong Bato",
+    "Bagbaguin",
+    "Balangkas",
+    "Bignay",
+    "Bisig",
+    "Canumay East",
+    "Canumay West",
+    "Coloong",
+    "Dalandanan",
+    "Gen. T. de Leon",
+    "Isla",
+    "Karuhatan",
+    "Lawang Bato",
+    "Lingunan",
+    "Mabolo",
+    "Malanday",
+    "Malinta",
+  ];
   return (
     <div className="flex flex-col w-full h-full gap-2">
-      <button
-        className="bg-green-500 text-white p-5"
-        onClick={() => {
-          calculateRiskIndexBackend(toCalculateValues, false).then((res) => {
-            setOutput(res["floodRiskIndex"]);
-            setInterpretation(res["interpretation"]);
-          });
-        }}
-      >
-        Calculate
-      </button>
       <div className="flex justify-between">
+        <div>
+          <p>
+            <span className="font-bold">Barangay: </span>
+            {barangay}
+          </p>
+
+          <select
+            onChange={(e) => {
+              setBarangay(e.target.value);
+            }}
+          >
+            {barangayList.map((barangay, index) => (
+              <option key={"barangay-option" + index}>{barangay}</option>
+            ))}
+          </select>
+          <button
+            className="bg-green-500 px-2 rounded-lg text-white ml-2"
+            onClick={() => {
+              calculateRiskIndexBackend(toCalculateValues, barangay, true).then(
+                (res) => {
+                  setOutput(res["floodRiskIndex"]);
+                  setInterpretation(res["interpretation"]);
+                }
+              );
+            }}
+          >
+            Save
+          </button>
+        </div>
         <div className="flex gap-4">
           <div>
             <span className="font-bold">Flood Risk Value: </span>
@@ -46,18 +83,6 @@ const Calculator = () => {
             <p>{interpretation}</p>
           </div>
         </div>
-
-        <button
-          className="bg-green-500 px-2 rounded-lg text-white"
-          onClick={() => {
-            calculateRiskIndexBackend(toCalculateValues, true).then((res) => {
-              setOutput(res["floodRiskIndex"]);
-              setInterpretation(res["interpretation"]);
-            });
-          }}
-        >
-          Save
-        </button>
       </div>
 
       <div className="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2">
@@ -119,6 +144,20 @@ const Calculator = () => {
           />
         </div>
       </div>
+      <button
+        className="bg-green-500 text-white p-5"
+        onClick={() => {
+          calculateRiskIndexBackend(toCalculateValues, barangay, false).then(
+            (res) => {
+              console.log("wtfffff", res);
+              setOutput(res["floodRiskIndex"]);
+              setInterpretation(res["interpretation"]);
+            }
+          );
+        }}
+      >
+        Calculate
+      </button>
     </div>
   );
 };

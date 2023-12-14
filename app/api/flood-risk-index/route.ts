@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getInterpretation } from "./floodRiskIndexInterpreter";
-import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getFirestore,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { doc, getDoc } from "firebase/firestore";
 import firebaseApp from "@/firebase/firebaseApp";
@@ -15,14 +21,15 @@ import { authOption } from "@/app/authOption";
 
 export async function POST(req: any) {
   const session = await getServerSession(authOption);
-  console.log(session?.user?.email);
-  if (session?.user?.email !== "vcsms.vfri2023@gmail.com") {
+
+  if (!session?.user?.email) {
     return NextResponse.json({ error: "true", message: "forbid" });
   }
 
   const raw = await req.json();
   const body = raw["toCalculate"];
-  console.log("tongina", body);
+
+  const barangay = raw["barangay"];
   const hazardValues = body["HAZARD"];
   const computedHazard = calculateHazard(hazardValues);
 
@@ -44,11 +51,12 @@ export async function POST(req: any) {
     console.log("should save na");
     try {
       const db = getFirestore(firebaseApp);
-      const docRef = await addDoc(collection(db, "floodRiskIndeces"), {
+      const docRef = await setDoc(doc(db, "floodRiskIndeces", barangay), {
         value: floodRiskIndex,
         interpretation: interpretation,
       });
-      console.log("Document written with ID: ", docRef.id);
+
+      console.log("Document written with ID: ", docRef);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -80,7 +88,7 @@ export async function GET(req: NextRequest) {
   const docSnap = await getDocs(collectionRef);
   const floodRiskIndeces: any[] = [];
   docSnap.forEach((doc) => {
-    floodRiskIndeces.push(doc.data());
+    floodRiskIndeces.push({ ...doc.data(), location: doc.id });
   });
 
   return NextResponse.json({ data: floodRiskIndeces });

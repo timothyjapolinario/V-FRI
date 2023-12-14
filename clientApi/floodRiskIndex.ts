@@ -49,9 +49,11 @@ export const getAllFloodRiskIndex = () => {
     if (data && data["data"]) {
       console.log("Wtf");
       const newIndexList = data["data"].map((index: any) => {
+        console.log(index);
         const floodRiskIndex: FloodRiskIndex = {
           value: index["value"],
           interpretation: index["interpretation"],
+          location: index["location"],
         };
         return floodRiskIndex;
       }) as FloodRiskIndex[];

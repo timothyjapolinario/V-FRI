@@ -1,3 +1,4 @@
+"use client";
 import { getAllFloodRiskIndex } from "@/clientApi/floodRiskIndex";
 import Loading from "./loading";
 import Image from "next/image";
@@ -22,14 +23,22 @@ const FloodRiskTable = () => {
         }}
       >
         <tr className="border-solid border-collapse border-2 border-black">
+          <th>Barangay</th>
           <th>Index Value</th>
           <th>Interpretation</th>
         </tr>
         {indexList.map((index, ind) => {
           return (
             <tr key={"indexandinter" + ind}>
-              <td>{index.value}</td>
-              <td>{index.interpretation}</td>
+              <td className="border-solid border-collapse border-2 border-black px-2">
+                {index.location}
+              </td>
+              <td className="border-solid border-collapse border-2 border-black px-2">
+                {index.value}
+              </td>
+              <td className="border-solid border-collapse border-2 border-black px-2">
+                {index.interpretation}
+              </td>
             </tr>
           );
         })}

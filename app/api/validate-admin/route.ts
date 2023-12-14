@@ -2,9 +2,10 @@ import { authOption } from "@/app/authOption";
 import { getServerSession } from "next-auth/next";
 
 import { NextRequest, NextResponse } from "next/server";
+import { validateIfAdmin } from "../flood-risk-index/route";
 export async function GET() {
   const session = await getServerSession(authOption);
-  const adminEmails = ["vcsms.vfri2023@gmail.com"];
+
   if (
     session === null ||
     session === undefined ||
@@ -17,6 +18,7 @@ export async function GET() {
     });
   }
 
-  const isAdmin = adminEmails.includes(session.user.email);
+  const isAdmin = await validateIfAdmin(session.user.email);
+  console.log(isAdmin, session.user.email);
   return NextResponse.json({ isAdmin });
 }
