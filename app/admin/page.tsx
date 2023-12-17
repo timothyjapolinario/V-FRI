@@ -1,9 +1,12 @@
+"use client";
+import { SessionProvider, useSession } from "next-auth/react";
+import AdminPage from "./AdminPage";
+
 const Admin = () => {
   return (
-    <div>
-      <label>Add Authorize Email</label>
-      <input className=""></input>
-    </div>
+    <SessionProvider>
+      <AdminPage />
+    </SessionProvider>
   );
 };
 export default Admin;
