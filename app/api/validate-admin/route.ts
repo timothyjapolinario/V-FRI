@@ -21,8 +21,7 @@ export async function GET() {
   }
 
   const isAdmin = await validateIfAdmin(session.user.email);
-  console.log(isAdmin, session.user.email);
-  return NextResponse.json({ isAdmin });
+  return NextResponse.json({ isAdmin: isAdmin });
 }
 
 export async function POST(req: any) {
