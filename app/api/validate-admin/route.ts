@@ -19,5 +19,5 @@ export async function GET() {
   }
 
   const isAdmin = await validateIfAdmin(session.user.email);
-  return NextResponse.json({ isAdmin: false });
+  return NextResponse.json({ isAdmin: isAdmin });
 }
