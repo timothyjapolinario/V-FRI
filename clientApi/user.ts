@@ -9,3 +9,22 @@ export const validateAdminClient = async () => {
     }
   });
 };
+
+export const addAdminClient = async (newEmail: string) => {
+  const body = {
+    newEmail: newEmail,
+  };
+  const response = await fetch(`${appDomain}/api/validate-admin`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  }).then((res) => {
+    try {
+      res.json();
+    } catch (error) {
+      console.log(error);
+    }
+    return res;
+  });
+  console.log("RESPONSE!!: ", response);
+  return response;
+};

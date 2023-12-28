@@ -97,8 +97,11 @@ export async function GET(req: NextRequest) {
 }
 
 export const validateIfAdmin = async (
-  emailAddress: string
+  emailAddress: string | null | undefined
 ): Promise<boolean> => {
+  if (emailAddress === null || emailAddress === undefined) {
+    return false;
+  }
   const db = getFirestore(firebaseApp);
   const collectionRef = collection(db, "admins");
   const docSnap = await getDocs(collectionRef);
