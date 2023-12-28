@@ -1,4 +1,5 @@
 import { appDomain } from "@/helpers/config";
+import moment from "moment";
 
 export const calculateRiskIndexBackend = async (
   toCalculate: {
@@ -7,12 +8,13 @@ export const calculateRiskIndexBackend = async (
   barangay: string,
   shouldSave?: boolean
 ) => {
+  const dateToday = moment().format("MMMM Do YYYY, h:mm:ss a");
   const result = fetch(`${appDomain}/api/flood-risk-index`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ toCalculate, shouldSave, barangay }),
+    body: JSON.stringify({ toCalculate, shouldSave, barangay, dateToday }),
   }).then((res) => {
     let returnVal = undefined;
     try {

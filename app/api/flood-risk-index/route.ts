@@ -27,6 +27,7 @@ export async function POST(req: any) {
   }
 
   const raw = await req.json();
+  const dateToday = raw["dateToday"];
   const body = raw["toCalculate"];
 
   const barangay = raw["barangay"];
@@ -54,6 +55,7 @@ export async function POST(req: any) {
       const docRef = await setDoc(doc(db, "floodRiskIndeces", barangay), {
         value: floodRiskIndex,
         interpretation: interpretation,
+        dateUpdated: dateToday,
       });
 
       console.log("Document written with ID: ", docRef);

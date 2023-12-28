@@ -54,6 +54,7 @@ export const getAllFloodRiskIndex = () => {
           value: index["value"],
           interpretation: index["interpretation"],
           location: index["location"],
+          lastUpdate: index["dateUpdated"],
         };
         return floodRiskIndex;
       }) as FloodRiskIndex[];

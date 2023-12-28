@@ -56,9 +56,7 @@ const Files = () => {
         </button>
       </div>
 
-      <p style={{ display: isUploading ? "" : "none" }}>
-        Uploading na sya, chill ka muna
-      </p>
+      <p style={{ display: isUploading ? "" : "none" }}>Uploading...</p>
       <ul>
         {(isLoading || isUploading) && (
           <Image

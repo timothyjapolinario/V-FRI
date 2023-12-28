@@ -26,6 +26,7 @@ const FloodRiskTable = () => {
           <th>Barangay</th>
           <th>Index Value</th>
           <th>Interpretation</th>
+          <th>Last Update</th>
         </tr>
         {indexList.map((index, ind) => {
           return (
@@ -38,6 +39,9 @@ const FloodRiskTable = () => {
               </td>
               <td className="border-solid border-collapse border-2 border-black px-2">
                 {index.interpretation}
+              </td>
+              <td className="border-solid border-collapse border-2 border-black px-2">
+                {index.lastUpdate ? index.lastUpdate : "No date"}
               </td>
             </tr>
           );
