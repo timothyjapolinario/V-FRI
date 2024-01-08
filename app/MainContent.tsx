@@ -27,9 +27,9 @@ const MainContent = () => {
       </div>
 
       <div className="w-full h-full overflow-y-hidden relative">
-        <div className="absolute right-0 top-[20px] z-10">
+        <div className="absolute right-0 top-[26px] z-10">
           <img
-            className="min-w-[850px] object-cover"
+            className="min-w-[900px] w-[60vw] object-cover"
             src="/images/building.webp"
           />
         </div>
@@ -57,12 +57,13 @@ const MainContent = () => {
         </div> */}
       </div>
 
-      <div className="w-screen h-[40vh] bg-[#990000] bottom-[-120px] absolute sm:bottom-[-110px] right-[-40vw] -rotate-12 -rotate z-20"></div>
-      <div className="w-screen h-[30vh] bg-[#990000] absolute bottom-[-130px] xl:bottom-[-140px] right-[-30vw] z-20"></div>
-      <div className="w-screen h-[40vh] bg-[#990000] absolute bottom-[-150px] left-[-60vw] rotate-6 -rotate z-20"></div>
+      <div className="w-screen h-[40vh] bg-[#990000] absolute bottom-[-23vh] right-[-20vw] -rotate-12 -rotate z-20"></div>
 
-      <div className="w-screen h-[40vh] bg-[#791212] absolute bottom-[-160px] sm:bottom-[-150px] right-[-40vw] -rotate-12 -rotate z-20"></div>
-      <div className="w-screen h-[30vh] bg-[#791212] absolute bottom-[-170px] xl:bottom-[-180px] right-[-30vw] z-20"></div>
+      <div className="w-screen h-[30vh] bg-[#990000] absolute bottom-[-13vh] right-[-30vw] z-20"></div>
+      <div className="w-screen h-[40vh] bg-[#990000] absolute bottom-[-14vh] left-[-60vw] rotate-6 -rotate z-20"></div>
+
+      <div className="w-screen h-[40vh] bg-[#791212] absolute bottom-[-160px] sm:bottom-[-25vh] right-[-40vw] -rotate-12 -rotate z-20"></div>
+      <div className="w-screen h-[30vh] bg-[#791212] absolute bottom-[-25vh] xl:bottom-[-25vh] right-[-30vw] z-20"></div>
       <div className="w-screen h-[40vh] bg-[#791212] absolute bottom-[-26vh] left-[-60vw] rotate-6 -rotate z-20"></div>
     </div>
   );
