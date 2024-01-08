@@ -18,12 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-200">
-        <SessionWrapper>
-          <Header />
-        </SessionWrapper>
-        {children}
-      </body>
+      <body className="bg-slate-200">{children}</body>
     </html>
   );
 }
