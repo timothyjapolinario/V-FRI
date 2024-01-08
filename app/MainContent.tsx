@@ -1,36 +1,23 @@
 "use client";
 
 import { getAllCloudFiles } from "@/clientApi/cloudFile";
+import HomeMenu from "@/components/HomeMenu";
 import ServiceTable from "@/components/ServiceTable";
 import { SessionProvider } from "next-auth/react";
 const MainContent = () => {
   return (
     <div className="relative h-screen overflow-hidden w-screen">
-      <div className="absolute top-10 left-14 flex gap-10 flex-col">
-        <h1>
-          <span className="text-[#791212] font-extrabold text-5xl">V</span>
-          <span className="text-gray-600 font-bold text-4xl">FRI</span>
-        </h1>
-        <div>
-          <p className="text-[#791212] font-extrabold text-7xl">VALUENZA</p>
-          <p className="text-gray-600 font-bold text-5xl">FLOOD RISK</p>
-          <p className="text-gray-600 font-bold text-5xl">INDEX</p>
-        </div>
-        <div className="flex gap-2">
-          <button className="bg-[#791212] px-5 py-2 rounded-lg text-white text-2xl">
-            Login
-          </button>
-          <button className="bg-gray-600 px-5 py-2 rounded-lg text-white text-2xl">
-            Flood Risk Index
-          </button>
-        </div>
+      <div className="absolute top-10 left-14 z-40">
+        <SessionProvider>
+          <HomeMenu />
+        </SessionProvider>
       </div>
 
       <div className="w-full h-full overflow-y-hidden relative">
         <div className="absolute right-0 top-[26px] z-10">
           <img
             className="min-w-[900px] w-[60vw] object-cover"
-            src="/images/building.webp"
+            src="/images/building.png"
           />
         </div>
       </div>

@@ -22,7 +22,7 @@ const ServiceTable = () => {
           display: isAdmin ? "" : "none",
         }}
       >
-        <Link href={"/files"}>
+        <Link href={"/service/files"}>
           <div className="w-[100%] max-w-[300px] h-[150px]">
             <ServiceLink
               urlIcon="/icons/document-icon.png"
