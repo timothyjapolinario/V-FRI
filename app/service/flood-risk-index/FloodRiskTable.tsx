@@ -6,14 +6,14 @@ import Image from "next/image";
 const FloodRiskTable = () => {
   const { indexList, isLoading } = getAllFloodRiskIndex();
   return (
-    <div>
+    <div className="relative min-h-[50vh]">
       {isLoading && (
         <Image
           src="/icons/loading-spinner.svg"
           alt="loading-spinner"
           width={300}
           height={300}
-          className="absolute top-[0] bottom-0 right-0 left-0 m-auto"
+          className="absolute top-0 bottom-0 right-0 left-0 m-auto"
         />
       )}
       <table

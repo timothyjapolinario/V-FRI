@@ -3,34 +3,30 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import SideServiceLink from "./SideServiceLink";
 import { appDomain } from "@/helpers/config";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const SideMenuNavigator = () => {
   const session = useSession();
+  const pathName = usePathname();
   const [isAdmin, setIsAdmin] = useState<boolean>();
   useEffect(() => {
     validateAdminClient().then((res: any) => {
       setIsAdmin(res["isAdmin"]);
     });
   }, [session]);
-  const [activeLinkIndex, setActiveLinkIndex] = useState(1);
+
   return (
     <div className="flex flex-col gap-4">
-      <div
-        onClick={() => {
-          setActiveLinkIndex(1);
-        }}
-      >
+      <div>
         <SideServiceLink
           url={`${appDomain}/service`}
           iconLink="/icons/home-flood.png"
           linkName="Home"
-          isActive={activeLinkIndex === 1}
+          isActive={pathName === "/service"}
         />
       </div>
       <div
-        onClick={() => {
-          setActiveLinkIndex(2);
-        }}
         style={{
           display: isAdmin ? "" : "none",
         }}
@@ -39,25 +35,18 @@ const SideMenuNavigator = () => {
           url={`${appDomain}/service/files`}
           iconLink="/icons/document-icon.png"
           linkName="File Manager"
-          isActive={activeLinkIndex === 2}
+          isActive={pathName === "/service/files"}
         />
       </div>
-      <div
-        onClick={() => {
-          setActiveLinkIndex(3);
-        }}
-      >
+      <div>
         <SideServiceLink
           url={`${appDomain}/service/flood-risk-index`}
           iconLink="/icons/flood-icon.png"
           linkName="Flood Risk Index"
-          isActive={activeLinkIndex === 3}
+          isActive={pathName === "/service/flood-risk-index"}
         />
       </div>
       <div
-        onClick={() => {
-          setActiveLinkIndex(4);
-        }}
         style={{
           display: isAdmin ? "" : "none",
         }}
@@ -66,7 +55,7 @@ const SideMenuNavigator = () => {
           url={`${appDomain}/service/flood-risk-index-calculator`}
           iconLink="/icons/calculator-icon.png"
           linkName="Flood Risk Index Calculator"
-          isActive={activeLinkIndex === 4}
+          isActive={pathName === "service/flood-risk-index-calculator"}
         />
       </div>
     </div>

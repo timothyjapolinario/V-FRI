@@ -47,7 +47,9 @@ const HomeMenu = () => {
           </button>
         </Link>
         <button className="bg-gray-600 px-5 py-2 rounded-lg text-white text-2xl">
-          <Link href={`${appDomain}/api/auth/signout`}>Flood Risk Index</Link>
+          <Link href={`${appDomain}/service/flood-risk-index`}>
+            Flood Risk Index
+          </Link>
         </button>
       </div>
     </div>

@@ -80,10 +80,6 @@ export async function POST(req: any) {
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOption);
 
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: "true", message: "forbid" });
-  }
-
   const db = getFirestore(firebaseApp);
   const collectionRef = collection(db, "floodRiskIndeces");
   const docSnap = await getDocs(collectionRef);

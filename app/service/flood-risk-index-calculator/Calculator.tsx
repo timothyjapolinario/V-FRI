@@ -56,21 +56,23 @@ const Calculator = () => {
                 <option key={"barangay-option" + index}>{barangay}</option>
               ))}
             </select>
-          </p>
 
-          <button
-            className="bg-[#990000] px-2 rounded-lg text-white ml-2"
-            onClick={() => {
-              calculateRiskIndexBackend(toCalculateValues, barangay, true).then(
-                (res) => {
+            <button
+              className="bg-[#990000] px-2 rounded-lg text-white ml-2"
+              onClick={() => {
+                calculateRiskIndexBackend(
+                  toCalculateValues,
+                  barangay,
+                  true
+                ).then((res) => {
                   setOutput(res["floodRiskIndex"]);
                   setInterpretation(res["interpretation"]);
-                }
-              );
-            }}
-          >
-            Save
-          </button>
+                });
+              }}
+            >
+              Save
+            </button>
+          </p>
         </div>
         <div className="flex gap-4">
           <div>
