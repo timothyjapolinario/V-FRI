@@ -41,7 +41,8 @@ export const getAllFloodRiskIndex = () => {
     fetcher,
     {
       revalidateIfStale: false,
-      revalidateOnFocus: false,
+      revalidateOnFocus: true,
+      revalidateOnMount: true,
     }
   );
   useEffect(() => {
@@ -53,6 +54,10 @@ export const getAllFloodRiskIndex = () => {
         const floodRiskIndex: FloodRiskIndex = {
           value: index["value"],
           interpretation: index["interpretation"],
+          hazard: index["hazard"] ? index["hazard"] : 1,
+          exposure: index["exposure"] ? index["exposure"] : 1,
+          vulnerability: index["vulnerability"] ? index["vulnerability"] : 1,
+          capacity: index["capacity"] ? index["capacity"] : 1,
           location: index["location"],
           lastUpdate: index["dateUpdated"],
         };

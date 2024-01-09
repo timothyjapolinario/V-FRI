@@ -47,20 +47,19 @@ const Calculator = () => {
         <div>
           <p>
             <span className="font-bold">Barangay: </span>
-            {barangay}
+            <select
+              onChange={(e) => {
+                setBarangay(e.target.value);
+              }}
+            >
+              {barangayList.map((barangay, index) => (
+                <option key={"barangay-option" + index}>{barangay}</option>
+              ))}
+            </select>
           </p>
 
-          <select
-            onChange={(e) => {
-              setBarangay(e.target.value);
-            }}
-          >
-            {barangayList.map((barangay, index) => (
-              <option key={"barangay-option" + index}>{barangay}</option>
-            ))}
-          </select>
           <button
-            className="bg-green-500 px-2 rounded-lg text-white ml-2"
+            className="bg-[#990000] px-2 rounded-lg text-white ml-2"
             onClick={() => {
               calculateRiskIndexBackend(toCalculateValues, barangay, true).then(
                 (res) => {
@@ -145,7 +144,7 @@ const Calculator = () => {
         </div>
       </div>
       <button
-        className="bg-green-500 text-white p-5"
+        className="bg-[#791212] text-white p-5"
         onClick={() => {
           calculateRiskIndexBackend(toCalculateValues, barangay, false).then(
             (res) => {

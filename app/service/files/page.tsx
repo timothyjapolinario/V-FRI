@@ -65,7 +65,7 @@ const Files = () => {
           className="absolute top-[50px] bottom-0 right-0 left-0 m-auto z-20"
         />
       )}
-      <div className="min-w-[70vw] w-full max-h-[60vh] p-6 flex gap-4 flex-wrap justify-center overflow-y-scroll">
+      <div className="min-w-[70vw] w-full max-h-[60vh] p-6 flex gap-4 flex-wrap justify-center ">
         {cloudFiles.map((cf, index) => {
           return (
             <div

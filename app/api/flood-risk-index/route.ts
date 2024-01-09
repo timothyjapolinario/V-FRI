@@ -55,6 +55,10 @@ export async function POST(req: any) {
       const docRef = await setDoc(doc(db, "floodRiskIndeces", barangay), {
         value: floodRiskIndex,
         interpretation: interpretation,
+        capacity: computedCapacity,
+        vulnerability: computedVulnerability,
+        exposure: computedExposure,
+        hazard: computedHazard,
         dateUpdated: dateToday,
       });
 
@@ -77,11 +81,6 @@ export async function GET(req: NextRequest) {
   const session = await getServerSession(authOption);
 
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "true", message: "forbid" });
-  }
-  const isAdmin = await validateIfAdmin(session.user.email);
-  console.log("IS ADMIN", isAdmin);
-  if (!isAdmin) {
     return NextResponse.json({ error: "true", message: "forbid" });
   }
 

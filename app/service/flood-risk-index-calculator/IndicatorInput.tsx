@@ -89,7 +89,7 @@ const IndicatorInput = ({
           );
         })}
         <button
-          className="bg-green-500 text-white rounded-md p-1"
+          className="bg-[#791212] text-white rounded-md p-1"
           onClick={() => {
             const newHazardValue: IndicatorValue = {
               value: 0,
