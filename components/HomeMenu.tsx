@@ -19,7 +19,7 @@ const HomeMenu = () => {
         <span className="text-gray-600 font-bold text-4xl">FRI</span>
       </h1>
       <div>
-        <p className="text-[#791212] font-extrabold text-7xl">VALUENZA</p>
+        <p className="text-[#791212] font-extrabold text-7xl">VALENZUELA</p>
         <p className="text-gray-600 font-bold text-5xl">FLOOD RISK</p>
         <p className="text-gray-600 font-bold text-5xl">INDEX</p>
       </div>
