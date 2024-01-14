@@ -33,7 +33,7 @@ const SideMenuNavigator = () => {
       >
         <SideServiceLink
           url={`${appDomain}/service/files`}
-          iconLink="/icons/document-icon.png"
+          iconLink="/icons/document-white.png"
           linkName="File Manager"
           isActive={pathName === "/service/files"}
         />
@@ -41,7 +41,7 @@ const SideMenuNavigator = () => {
       <div>
         <SideServiceLink
           url={`${appDomain}/service/flood-risk-index`}
-          iconLink="/icons/flood-icon.png"
+          iconLink="/icons/flood-white.png"
           linkName="Flood Risk Index"
           isActive={pathName === "/service/flood-risk-index"}
         />
@@ -53,7 +53,7 @@ const SideMenuNavigator = () => {
       >
         <SideServiceLink
           url={`${appDomain}/service/flood-risk-index-calculator`}
-          iconLink="/icons/calculator-icon.png"
+          iconLink="/icons/calculator-icon-white.png"
           linkName="Flood Risk Index Calculator"
           isActive={pathName === "service/flood-risk-index-calculator"}
         />
